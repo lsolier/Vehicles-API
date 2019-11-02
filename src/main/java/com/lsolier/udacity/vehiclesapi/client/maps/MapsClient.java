@@ -3,6 +3,7 @@ package com.lsolier.udacity.vehiclesapi.client.maps;
 import com.lsolier.udacity.vehiclesapi.domain.model.Location;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 

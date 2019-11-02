@@ -10,12 +10,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class PriceClient {
 
   private final WebClient client;
-  private final ModelMapper mapper;
 
-  public PriceClient(WebClient client,
-                     ModelMapper mapper) {
+  public PriceClient(WebClient client) {
     this.client = client;
-    this.mapper = mapper;
   }
 
   // In a real-world application we'll want to add some resilience
