@@ -7,20 +7,18 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
-public class SecurityAuditorAware implements AuditorAware<UUID> {
+public class SecurityAuditorAware implements AuditorAware<String> {
 
   @Override
-  public Optional<UUID> getCurrentAuditor() {
+  public Optional<String> getCurrentAuditor() {
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
     if (authentication == null || !authentication.isAuthenticated()) {
       return Optional.empty();
     }
-    CustomUser customUser = new CustomUser((User) authentication.getPrincipal());
-    return Optional.of(customUser.getId());
+    return Optional.of(((User) authentication.getPrincipal()).getUsername());
   }
 }

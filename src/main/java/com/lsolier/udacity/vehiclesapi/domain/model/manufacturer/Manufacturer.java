@@ -16,7 +16,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Manufacturer extends Auditable<UUID> {
+public class Manufacturer extends Auditable<String> {
 
   @Id
   private Integer code;

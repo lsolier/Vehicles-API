@@ -6,10 +6,10 @@ spring:
       enabled: true
       path: "/h2"
   datasource:
-    url: "jdbc:h2:mem:dogdata"
+    url: "jdbc:h2:mem:vehicles"
     driverClassName: "org.h2.Driver"
     username: sa
-    password: password
+    password: sa
 
 external-services:
   pricing:
@@ -21,9 +21,9 @@ external-services:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:9000/eureka/
+      defaultZone: http://localhost:8761/eureka/
     service-url:
-      default-zone: http://localhost:9000/eureka/
+      default-zone: http://localhost:8761/eureka/
 instance:
   preferIpAddress: true
 

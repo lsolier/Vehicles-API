@@ -4,6 +4,7 @@ import com.lsolier.udacity.vehiclesapi.domain.model.Location;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,7 +17,7 @@ public class MapsClient {
   private final WebClient client;
   private final ModelMapper mapper;
 
-  public MapsClient(WebClient client,
+  public MapsClient(@Qualifier("maps") WebClient client,
                     ModelMapper mapper) {
     this.client = client;
     this.mapper = mapper;

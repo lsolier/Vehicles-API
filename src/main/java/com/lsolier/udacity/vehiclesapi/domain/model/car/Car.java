@@ -25,7 +25,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class Car extends Auditable<UUID> {
+public class Car extends Auditable<String> {
 
   @Id
   @GeneratedValue

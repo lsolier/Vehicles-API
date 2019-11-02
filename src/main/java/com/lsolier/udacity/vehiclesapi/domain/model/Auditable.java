@@ -1,5 +1,6 @@
 package com.lsolier.udacity.vehiclesapi.domain.model;
 
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@Setter
 public abstract class Auditable<U> {
 
   @CreatedBy
