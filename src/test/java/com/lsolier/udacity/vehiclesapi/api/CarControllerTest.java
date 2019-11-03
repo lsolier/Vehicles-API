@@ -2,17 +2,19 @@ package com.lsolier.udacity.vehiclesapi.api;
 
 import static com.lsolier.udacity.vehiclesapi.domain.model.Condition.USED;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.google.gson.Gson;
 import com.lsolier.udacity.vehiclesapi.client.maps.MapsClient;
@@ -33,6 +35,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.MediaType;
 
 import org.springframework.test.context.junit4.SpringRunner;
@@ -144,6 +148,40 @@ public class CarControllerTest {
     Car car = new Gson().fromJson(result.getResponse().getContentAsString(), Car.class);
     Assert.assertEquals(car.getId(), Long.valueOf(1));
     Assert.assertEquals(car.getCondition(), getCar().getCondition());
+  }
+
+  /**
+   * Tests the deletion of a single car by ID.
+   * @throws Exception if the delete operation of a vehicle fails
+   */
+  @Test
+  public void deleteCar() throws Exception {
+    URI uri = new URI("/cars/1");
+    mvc.perform(
+        delete(uri)
+            .with(user("admin4").password("pass").roles("ADMIN"))
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isNoContent());
+  }
+
+  /**
+   * Tests the update of a single car by ID.
+   * @throws Exception if the update operation of a vehicle fails
+   */
+  @Test
+  public void updateCar() throws Exception {
+    Car car = getCar();
+    URI uri = new URI("/cars/1");
+    mvc.perform(
+        put(uri)
+            .with(user("admin4").password("pass").roles("ADMIN"))
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(json.write(car).getJson())
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk());
   }
 
   /**
