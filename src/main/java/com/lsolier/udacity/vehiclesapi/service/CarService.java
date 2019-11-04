@@ -65,6 +65,7 @@ public class CarService {
     if (car.getId() != null) {
       return carRepository.findById(car.getId())
           .map(carToBeUpdated -> {
+            carToBeUpdated.setCondition(car.getCondition());
             carToBeUpdated.setDetails(car.getDetails());
             carToBeUpdated.setLocation(car.getLocation());
             return carRepository.save(carToBeUpdated);
